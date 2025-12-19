@@ -71,6 +71,7 @@ export interface TeamMember {
   lastActive: string;
   avatar?: string;
   initials?: string;
+  colorClass: string;
 }
 
 export interface Stats {
@@ -102,4 +103,27 @@ export interface Question {
   selectedOption: string;
   isCorrect: boolean;
   points: number;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  department: string;
+  role: UserRole;
+  status: 'Active' | 'Pending' | 'Inactive';
+  initials: string;
+}
+
+export interface TeamMember {
+ 
+}
+
+export interface StatCardData {
+  title: string;
+  value: string;
+  trend: string;
+  trendType: 'up' | 'down' | 'neutral';
+  icon: string;
+  color: string;
 }

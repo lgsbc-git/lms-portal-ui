@@ -1,172 +1,214 @@
 
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Cell } from 'recharts';
+import React, { useState } from 'react';
+import { Download, Sparkles, X, TrendingUp, Zap, Users, BookOpen, Search, MoreHorizontal, Users2, CheckCircle, AlertCircle } from 'lucide-react';
+import { STATS, TEAM_MEMBERS, MOCK_USERS } from '../constants';
 
-const dataCompliance = [
-  { name: 'Compliant', value: 1125, color: '#137fec' },
-  { name: 'Overdue', value: 225, color: '#ef4444' },
-  { name: 'In Progress', value: 150, color: '#f59e0b' },
-];
-
-const dataEngagement = [
-  { name: 'Week 1', users: 30 },
-  { name: 'Week 2', users: 55 },
-  { name: 'Week 3', users: 42 },
-  { name: 'Week 4', users: 78 },
-];
+const getIconComponent = (iconName: string) => {
+  const iconMap: { [key: string]: React.ReactNode } = {
+    'group': <Users2 size={24} />,
+    'local_library': <BookOpen size={24} />,
+    'verified_user': <CheckCircle size={24} />,
+    'assignment_late': <AlertCircle size={24} />,
+  };
+  return iconMap[iconName] || <Users size={24} />;
+};
 
 const AdminDashboard: React.FC = () => {
-  return (
-    <div className="p-10 max-w-[1400px] mx-auto space-y-10">
-      <header className="flex flex-col md:flex-row justify-between items-end gap-6">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-black tracking-tight text-[#111418]">Admin Reporting</h1>
-          <p className="text-gray-500 font-medium">Overview of training compliance and learner engagement</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="flex bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
-            <button className="px-4 py-2 text-xs font-bold text-[#137fec] bg-blue-50 rounded-lg">Last 30 Days</button>
-            <button className="px-4 py-2 text-xs font-bold text-gray-500 hover:bg-gray-50 rounded-lg transition-colors">Last 90 Days</button>
-          </div>
-          <button className="flex items-center gap-2 bg-[#137fec] hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-xl shadow-blue-500/25 transition-all transform hover:-translate-y-0.5">
-            <span className="material-symbols-outlined text-lg">download</span>
-            Export Report
-          </button>
-        </div>
-      </header>
+  const [insight, setInsight] = useState<string>('');
+  const [loadingInsight, setLoadingInsight] = useState(false);
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {[
-          { label: 'Global Compliance', value: '87%', trend: '+2.4%', icon: 'verified_user' },
-          { label: 'Avg Learning Hours', value: '12.5 hrs', trend: '+0.8%', icon: 'schedule' },
-          { label: 'Course Completions', value: '1,240', trend: '+5.1%', icon: 'emoji_events' }
-        ].map((stat, i) => (
-          <div key={i} className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
-            <div className="absolute right-[-20px] top-[-20px] p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-              <span className="material-symbols-outlined text-8xl text-[#137fec]">{stat.icon}</span>
-            </div>
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{stat.label}</p>
-              <span className="material-symbols-outlined text-[#137fec]">{stat.icon}</span>
-            </div>
-            <div className="flex items-baseline gap-4">
-              <p className="text-4xl font-black text-gray-900">{stat.value}</p>
-              <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg text-xs font-black">
-                <span className="material-symbols-outlined text-[14px]">trending_up</span>
-                {stat.trend}
+  const fetchInsights = async () => {
+    setLoadingInsight(true);
+    const statsStr = STATS.map(s => `${s.title}: ${s.value}`).join(', ');
+    // Simulate API call
+    setTimeout(() => {
+      setInsight(`System analysis shows optimal performance. ${statsStr}`);
+      setLoadingInsight(false);
+    }, 2000);
+  };
+
+  return (
+    <main className="flex-1 overflow-y-auto scrollbar-hide p-6 md:p-10">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 pb-12">
+
+        {/* Header Section */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-primary text-sm font-bold uppercase tracking-widest mb-1">System Overview</h2>
+            <h1 className="text-dark text-3xl md:text-5xl font-bold leading-tight tracking-tight">
+              Dashboard <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">Administrator</span>
+            </h1>
+            <p className="text-secondary text-base md:text-lg font-normal mt-2 max-w-2xl">
+              System status is healthy. <span className="text-dark font-medium border-b border-primary/30 pb-0.5">3 pending user approvals</span> and <span className="text-dark font-medium border-b border-primary/30 pb-0.5">99.9% uptime</span> recorded this week.
+            </p>
+          </div>
+          <div className="flex gap-2">
+
+            <button className="flex items-center gap-2 bg-white hover:bg-slate-50 border border-border hover:border-primary/30 text-dark px-5 py-2.5 rounded-lg transition-all text-sm font-medium shadow-sm hover:shadow-md">
+              <Download size={18} className="text-primary" />
+              Download Report
+            </button>
+          </div>
+        </div>
+
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {STATS.map((stat, idx) => (
+            <div key={idx} className="flex flex-col gap-4 rounded-2xl p-6 bg-white border border-border shadow-card hover:shadow-float transition-all duration-300 group">
+              <div className="flex items-center justify-between">
+                <div className={`p-2.5 rounded-xl transition-colors ${stat.color === 'blue' ? 'bg-blue-50 group-hover:bg-blue-100' :
+                  stat.color === 'teal' ? 'bg-primary-bg group-hover:bg-teal-100' :
+                    stat.color === 'purple' ? 'bg-purple-50 group-hover:bg-purple-100' :
+                      'bg-rose-50 group-hover:bg-rose-100'
+                  }`}>
+                  <div className={`${stat.color === 'blue' ? 'text-blue-600' :
+                    stat.color === 'teal' ? 'text-primary' :
+                      stat.color === 'purple' ? 'text-purple-600' :
+                        'text-rose-600'
+                    }`}>
+                    {getIconComponent(stat.icon as string)}
+                  </div>
+                </div>
+                <span className={`text-xs font-semibold px-2 py-1 rounded-full flex items-center gap-1 border ${stat.trendType === 'neutral'
+                  ? 'text-secondary bg-slate-100 border-border'
+                  : 'text-emerald-600 bg-emerald-50 border-emerald-100'
+                  }`}>
+                  {stat.trendType === 'up' && <TrendingUp size={14} />}
+                  {stat.trend}
+                </span>
+              </div>
+              <div>
+                <p className="text-secondary text-sm font-medium mb-1">{stat.title}</p>
+                <p className="text-dark text-4xl font-bold tracking-tight">{stat.value}</p>
               </div>
             </div>
-            <p className="text-[10px] text-gray-400 mt-2 font-bold uppercase tracking-widest">Compared to previous period</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col gap-8 h-[400px]">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">Compliance Breakdown</h3>
-              <p className="text-sm text-gray-400 font-medium">Total 1,500 enrolled users</p>
-            </div>
-            <button className="text-gray-400 hover:text-gray-600 transition-colors"><span className="material-symbols-outlined">more_horiz</span></button>
+        {/* Quick Actions */}
+        <div>
+          <h3 className="text-dark text-xl font-bold mb-6 flex items-center gap-2">
+            <Zap size={24} className="text-primary" />
+            Quick Actions
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <a className="group relative overflow-hidden rounded-2xl aspect-[16/8] sm:aspect-[16/7] text-left border border-border hover:border-primary/50 transition-all duration-300 shadow-card hover:shadow-float cursor-pointer block">
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style={{ backgroundImage: `linear-gradient(0deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.3) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeOc6y33j0kD3gcmq_E5EdVadAj2BF6J2PR_-hRmZUDyNIRr-4edd6Xgsk3ZDOqh_6Ek4cMFDuJ8-reg7YS2N518p1ARWbFg1hdajvWECZCbEa7-sAmpAqWKJ9e5bH3Q8nczoebUUMEwXXCi3jsokCrj9vg9X0Quf4vijIEFLXqJPXoKT3rb5cGFaJRPPhQk0riOSfUvghVv7RWXa7kVE8Xnr4SMDDzyM2mHqapRSlaxAtmq3IsKdFvxYiMgWSkZ_QDcghZI5tIkd7")` }}>
+              </div>
+              <div className="absolute inset-0 bg-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay"></div>
+              <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
+                <div className="bg-white/20 backdrop-blur-md w-fit p-2.5 rounded-xl mb-3 text-white border border-white/20">
+                  <Users size={24} />
+                </div>
+                <p className="text-white text-lg font-bold">Manage Users</p>
+                <p className="text-slate-200 text-sm mt-0.5 font-light">Add or edit accounts</p>
+              </div>
+            </a>
+            <a className="group relative overflow-hidden rounded-2xl aspect-[16/8] sm:aspect-[16/7] text-left border border-border hover:border-purple-500/50 transition-all duration-300 shadow-card hover:shadow-float cursor-pointer block">
+              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style={{ backgroundImage: `linear-gradient(0deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.3) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrySgQL088aiN4hYEE26tsMJLjk_jQYBpbgPNyrJgvSQxwTnha23d6mAkjbNJBhri9Nzoi4opVXii9OQU0XpP_6KuzF7KEMOWO-6VbQLRaa60CALZnhIfi0LzJNWmL-maeF48l3j3ium-7-DRNqaOWr-T6hzvN1pCAafPBWeqKT6Hm0HZ0q1msh9K-S-dAloPbtGrmgLkl7MWIcz0kzY2n9fT5vkfAH6ycgvcOjN243mZ9PI9uXrbG4nzir2h1Dn_0pxFMgMSsxICO")` }}>
+              </div>
+              <div className="absolute inset-0 bg-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-overlay"></div>
+              <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
+                <div className="bg-white/20 backdrop-blur-md w-fit p-2.5 rounded-xl mb-3 text-white border border-white/20">
+                  <BookOpen size={24} />
+                </div>
+                <p className="text-white text-lg font-bold">Manage Courses</p>
+                <p className="text-slate-200 text-sm mt-0.5 font-light">Review content</p>
+              </div>
+            </a>
           </div>
-          <div className="flex-1">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={dataCompliance} layout="vertical" margin={{ left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
-                <XAxis type="number" hide />
-                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 700, fill: '#64748b' }} />
-                <Tooltip 
-                  cursor={{ fill: '#f8fafc' }}
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                />
-                <Bar dataKey="value" radius={[0, 8, 8, 0]} barSize={32}>
-                  {dataCompliance.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+        </div>
+
+        {/* Team Members */}
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-dark text-xl font-bold flex items-center gap-2">
+              <Users size={24} className="text-primary" />
+              Team Members
+            </h3>
+            <button className="text-sm font-semibold text-primary hover:text-primary-dark transition-colors">View All</button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TEAM_MEMBERS.map(member => (
+              <div key={member.id} className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-border shadow-card hover:shadow-float hover:border-primary/30 transition-all cursor-pointer">
+                <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${member.colorClass}`}>
+                  {member.initials}
+                </div>
+                <div>
+                  <p className="text-dark text-sm font-bold">{member.name}</p>
+                  <p className="text-xs text-secondary">{member.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* User Information Table */}
+        <div>
+          <h3 className="text-dark text-xl font-bold mb-6 flex items-center gap-2">
+            <Search size={24} className="text-primary" />
+            User Information
+          </h3>
+          <div className="bg-white rounded-2xl border border-border shadow-card overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-border text-xs uppercase tracking-wider text-secondary">
+                    <th className="px-6 py-4 font-semibold">User Details</th>
+                    <th className="px-6 py-4 font-semibold">Department</th>
+                    <th className="px-6 py-4 font-semibold">Role</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
+                    <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border text-sm">
+                  {MOCK_USERS.map(user => (
+                    <tr key={user.id} className="group hover:bg-surface-hover transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center text-secondary font-bold text-xs border border-border">
+                            {user.initials}
+                          </div>
+                          <div>
+                            <p className="font-medium text-dark">{user.name}</p>
+                            <p className="text-xs text-secondary">{user.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-secondary">{user.department}</td>
+                      <td className="px-6 py-4 text-secondary">{user.role}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 py-0.5 px-2.5 rounded-full text-xs font-medium border ${user.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                          user.status === 'Pending' ? 'bg-amber-50 text-amber-600 border-amber-100' :
+                            'bg-slate-100 text-secondary border-border'
+                          }`}>
+                          {user.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button className="p-1.5 text-secondary hover:text-dark hover:bg-slate-200 rounded-lg transition-colors">
+                          <MoreHorizontal size={18} />
+                        </button>
+                      </td>
+                    </tr>
                   ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col gap-8 h-[400px]">
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900">Engagement Over Time</h3>
-              <p className="text-sm text-gray-400 font-medium">Avg: 45 Active Users/Day</p>
+                </tbody>
+              </table>
             </div>
-            <button className="text-gray-400 hover:text-gray-600 transition-colors"><span className="material-symbols-outlined">more_horiz</span></button>
-          </div>
-          <div className="flex-1">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dataEngagement}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 700, fill: '#64748b' }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 700, fill: '#64748b' }} />
-                <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                />
-                <Line type="monotone" dataKey="users" stroke="#137fec" strokeWidth={4} dot={{ r: 6, fill: '#137fec', strokeWidth: 3, stroke: '#fff' }} activeDot={{ r: 8 }} />
-              </LineChart>
-            </ResponsiveContainer>
+            <div className="px-6 py-4 border-t border-border bg-slate-50 flex items-center justify-between">
+              <p className="text-xs text-secondary">Showing {MOCK_USERS.length} of 2,450 users</p>
+              <div className="flex gap-2">
+                <button className="px-3 py-1 text-xs font-medium text-secondary bg-white border border-border rounded-lg hover:bg-slate-50 hover:text-dark transition-colors shadow-sm disabled:opacity-50">Previous</button>
+                <button className="px-3 py-1 text-xs font-medium text-secondary bg-white border border-border rounded-lg hover:bg-slate-50 hover:text-dark transition-colors shadow-sm">Next</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="p-8 border-b border-gray-50 flex justify-between items-center">
-          <h3 className="text-xl font-bold text-gray-900">Top Performing Courses</h3>
-          <button className="text-[#137fec] text-sm font-bold hover:underline">View All Courses</button>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-              <tr>
-                <th className="px-8 py-5">Course Name</th>
-                <th className="px-8 py-5">Category</th>
-                <th className="px-8 py-5">Enrolled</th>
-                <th className="px-8 py-5">Rating</th>
-                <th className="px-8 py-5 text-right">Completion</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              {[
-                { name: 'Cybersecurity Fundamentals', cat: 'IT Security', enrolled: 450, rating: 4.8, comp: '92%', img: 'https://picsum.photos/seed/cyber/100' },
-                { name: 'Workplace Safety 101', cat: 'Compliance', enrolled: 320, rating: 4.5, comp: '65%', img: 'https://picsum.photos/seed/safety/100' },
-                { name: 'Leadership Principles', cat: 'Management', enrolled: 185, rating: 4.9, comp: '40%', img: 'https://picsum.photos/seed/lead/100' }
-              ].map((course, i) => (
-                <tr key={i} className="hover:bg-gray-50 transition-colors group cursor-pointer">
-                  <td className="px-8 py-6">
-                    <div className="flex items-center gap-4">
-                      <img src={course.img} alt={course.name} className="w-12 h-12 rounded-xl object-cover" />
-                      <span className="font-bold text-gray-900 group-hover:text-[#137fec] transition-colors">{course.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-8 py-6 text-sm text-gray-500 font-medium">{course.cat}</td>
-                  <td className="px-8 py-6 text-sm text-gray-900 font-black">{course.enrolled}</td>
-                  <td className="px-8 py-6">
-                    <div className="flex items-center gap-1 text-yellow-500">
-                      <span className="material-symbols-outlined text-[16px] fill-1">star</span>
-                      <span className="text-sm font-black text-gray-900">{course.rating}</span>
-                    </div>
-                  </td>
-                  <td className="px-8 py-6 text-right">
-                    <span className={`px-3 py-1 rounded-full text-xs font-black ${
-                      parseInt(course.comp) > 90 ? 'bg-emerald-50 text-emerald-600' :
-                      parseInt(course.comp) > 60 ? 'bg-yellow-50 text-yellow-600' :
-                      'bg-blue-50 text-[#137fec]'
-                    }`}>
-                      {course.comp} Complete
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    </main>
   );
 };
 

@@ -1,7 +1,7 @@
 
 import { Courses, CourseLevel, CourseBadge, TeamMember, MemberStatus } from './types';
 import { InstructorCourse, Evaluation, Question } from './types';
-
+import { User, StatCardData } from './types';
 export const MOCK_COURSES: InstructorCourse [] = [
   {
     id: '1',
@@ -293,4 +293,27 @@ export const MOCK_QUESTIONS: Question[] = [
     isCorrect: true,
     points: 10
   }
+];
+
+
+
+export const MOCK_USERS: User[] = [
+  { id: '1', name: 'Emily Parker', email: 'emily.p@lgsbc.com', department: 'Marketing', role: 'Employee', status: 'Active', initials: 'EP' },
+  { id: '2', name: 'Michael Jordan', email: 'michael.j@lgsbc.com', department: 'Sales Dept', role: 'Manager', status: 'Active', initials: 'MJ' },
+  { id: '3', name: 'Sarah Connor', email: 'sarah.c@lgsbc.com', department: 'Operations', role: 'Employee', status: 'Pending', initials: 'SC' },
+  { id: '4', name: 'David Kim', email: 'david.k@lgsbc.com', department: 'Engineering', role: 'Instructor', status: 'Inactive', initials: 'DK' },
+];
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  { id: '1', name: 'Jane Doe', role: 'Lead Administrator', initials: 'JD', colorClass: 'bg-blue-100 text-blue-600' },
+  { id: '2', name: 'Mark Smith', role: 'Course Manager', initials: 'MS', colorClass: 'bg-emerald-100 text-emerald-600' },
+  { id: '3', name: 'Ada Lovelace', role: 'IT Support', initials: 'AL', colorClass: 'bg-purple-100 text-purple-600' },
+  { id: '4', name: 'Raj Kumar', role: 'Content Editor', initials: 'RK', colorClass: 'bg-amber-100 text-amber-600' },
+];
+
+export const STATS: StatCardData[] = [
+  { title: 'Total Users', value: '20', icon: 'group', color: 'blue' },
+  { title: 'Active Courses', value: '32', icon: 'local_library', color: 'teal' },
+  { title: 'Compliance Rate', value: '94%', trend: '94%', trendType: 'up', icon: 'verified_user', color: 'purple' },
+  { title: 'Total Mandatory Courses', value: '4', trend: '', trendType: 'neutral', icon: 'assignment_late', color: 'rose' },
 ];
