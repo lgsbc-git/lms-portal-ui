@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../App';
 import { UserRole } from '../types';
-import logoImage from '../src/assests/lgstechlogo-withoutbg-gradientcolor.png?url';
 
 const Login: React.FC = () => {
   const { login } = useAuth();

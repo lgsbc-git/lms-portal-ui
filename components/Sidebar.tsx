@@ -43,7 +43,7 @@ const Sidebar: React.FC = () => {
     <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col z-20">
       <div className="h-20 flex items-center justify-center border-b border-gray-200">
         <div className="flex flex-col items-center gap-0">
-          <img src="../src/assests/lgstechlogo-withoutbg-gradientcolor.png" alt="LGS Tech Logo" className="h-16 w-16 object-contain" />
+          <img src="/lgstechlogo-withoutbg-gradientcolor.png" alt="LGS Tech Logo" className="h-16 w-16 object-contain" />
           <span className="text-[10px] text-gray-500 uppercase tracking-widest">{user?.role} Portal</span>
         </div>
       </div>
