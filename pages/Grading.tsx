@@ -91,7 +91,7 @@ const Grading: React.FC = () => {
           <div className="sticky top-24 space-y-6">
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
               <h3 className="text-dark font-bold">{evaluation.studentName}</h3>
-              <p className="text-slate-500 text-xs">Student ID: {evaluation.studentId}</p>
+              <p className="text-slate-500 text-xs">Employee ID: {evaluation.studentId}  employee@lgsbc.com</p>
             </div>
 
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
@@ -115,14 +115,7 @@ const Grading: React.FC = () => {
                     <label className="block text-sm font-semibold text-slate-700">
                       Instructor Feedback
                     </label>
-                    <button
-                      onClick={handleAiFeedback}
-                      disabled={isGenerating}
-                      className="text-primary text-xs font-bold flex items-center gap-1 hover:underline disabled:opacity-50"
-                    >
-                      <Sparkles size={14} />
-                      {isGenerating ? 'Generating...' : 'AI Suggestion'}
-                    </button>
+          
                   </div>
 
                   <textarea

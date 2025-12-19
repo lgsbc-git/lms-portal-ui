@@ -117,14 +117,6 @@ Professionals and learners seeking to enhance their knowledge in ${domainName}.
                   <label className="block text-sm font-semibold text-dark">
                     Course Details
                   </label>
-                  <button
-                    onClick={handleAiOutline}
-                    disabled={isGenerating}
-                    className="text-primary text-xs font-bold flex items-center gap-1 hover:underline disabled:opacity-50"
-                  >
-                    <Sparkles size={14} />
-                    {isGenerating ? 'Generating...' : 'AI Outline Suggestion'}
-                  </button>
                 </div>
 
                 <div className="rounded-xl border border-border overflow-hidden bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all shadow-sm">
