@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../App';
 import { UserRole } from '../types';
+import logoImage from '../src/assests/lgstechlogo-withoutbg-gradientcolor.png?url';
 
 const Login: React.FC = () => {
   const { login } = useAuth();
@@ -20,8 +20,13 @@ const Login: React.FC = () => {
       {/* Left Column: Form */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 md:px-24 xl:px-32 py-12 relative z-10">
         <div className="absolute top-8 left-8 flex items-center gap-2">
-          <img src="../src/assests/lgstechlogo-withoutbg-gradientcolor.png" alt="LGS Tech Logo" className="w-20 h-20 object-contain" />
+          <img
+            src="/lgstechlogo-withoutbg-gradientcolor.png"
+            alt="LGS Tech Logo"
+            className="w-20 h-20 object-contain"
+          />
         </div>
+
 
         <div className="max-w-md w-full mx-auto">
           <div className="mb-10">
