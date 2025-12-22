@@ -17,6 +17,7 @@ import InstructorCatalog from './pages/InstructorCatalog';
 import Evaluations from './pages/Evaluation';
 import Grading from './pages/Grading';
 import CreateCourse from './pages/CreateCourse';
+import Security from './pages/Security';
 
 
 interface AuthContextType {
@@ -98,6 +99,7 @@ const App: React.FC = () => {
           <Route path="/evaluations" element={<MainLayout><Evaluations/></MainLayout>} />
           <Route path="/evaluations/:id" element={<MainLayout><Grading/></MainLayout>} />
           <Route path="/create-course" element={<MainLayout><CreateCourse/></MainLayout>} />
+          <Route path="/security" element={<MainLayout><Security/></MainLayout>} />
 
           <Route path="/" element={<Navigate to="/login" />} />
     

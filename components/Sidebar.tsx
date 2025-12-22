@@ -21,12 +21,15 @@ const Sidebar: React.FC = () => {
       [UserRole.MANAGER]: [
         { name: 'My Team', icon: 'groups', path: '/my-team' },
         { name: 'Course Catalog', icon: 'menu_book', path: '/catalog' },
+         { name: 'Manage courses', icon: 'menu_book', path: '/instructor-catalog' },
+        { name: 'Evaluations', icon: 'assignment_turned_in', path: '/evaluations' },
       ],
       [UserRole.ADMIN]: [
         { name: 'Course Management', icon: 'book', path: '/instructor-catalog' },
         { name: 'My Team', icon: 'groups', path: '/my-team' },
         { name: 'Course Catalog', icon: 'menu_book', path: '/catalog' },
         { name: 'Evaluations', icon: 'assignment_turned_in', path: '/evaluations' },
+        { name: 'User Management', icon: 'people', path: '/user-management' },
       ],
       [UserRole.INSTRUCTOR]: [
         { name: 'Course Catalog', icon: 'menu_book', path: '/instructor-catalog' },
